@@ -1,3 +1,75 @@
+body {
+  color: black;
+  background-color: #fefefe;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  font-family: 'Crimson Text', serif;
+}
+ 
+* {
+  box-sizing: border-box;
+}
+
 #root {
-  color: red;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin: 20px;
+}
+
+.card {
+  box-shadow: 1px 10px 5px 0px rgb(15, 22, 31);
+  width: 20rem;
+  height: 25rem;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 1.5rem;
+  padding-left: 1rem
+}
+
+.summary-text {
+  text-align: justify;
+  word-break:keep-all;
+  z-index: 10;
+  position: relative;
+  font-size: 12px;
+}
+
+.season-names {
+  border-radius: 80px solid rgb(255, 0, 0);
+  border-radius: 5px;
+}
+
+ .card:hover {
+  transform: scale(1.2);
+  box-shadow: 5px 5px 15px white; 
+  background-color: rgb(15, 22, 31);
+  color: white;
+} 
+
+.topdiv { 
+  display: flex;
+  min-width: 100px;
+  height: 40px;
+  width: 240px;
+  border-radius: 5px;
+  background: rgb(15, 22, 31);
+}
+
+.topdiv input {
+  width: 200px;
+  font-size: 16px;
+  font-family: 'Crimson Text', serif;
+  border-radius: 18px 2px 2px 18px;
+  /* height: 100%;
+  
+  border: 2px solid rgb(15, 22, 31);
+  border:  rgb(15, 22, 31);
+ */
 }
