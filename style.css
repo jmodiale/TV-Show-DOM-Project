@@ -53,23 +53,45 @@ body {
   color: white;
 } 
 
-.topdiv { 
+.main {
   display: flex;
-  min-width: 100px;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  height: auto;
+  background-color: rgb(15, 22, 31);
+}
+
+.topdiv { 
   height: 40px;
   width: 240px;
   border-radius: 5px;
-  background: rgb(15, 22, 31);
+  background: white;
+  margin: 20px;
+  box-sizing: border-box;
+}
+
+.dropDiv {
+  height: 40px;
+  width: 240px;
+  border-radius: 5px;
+  background: white;
+  margin: 20px;
+  box-sizing: border-box;
 }
 
 .topdiv input {
-  width: 200px;
-  font-size: 16px;
+  width: 240px;
+  height: 40px;
   font-family: 'Crimson Text', serif;
-  border-radius: 18px 2px 2px 18px;
-  /* height: 100%;
-  
-  border: 2px solid rgb(15, 22, 31);
-  border:  rgb(15, 22, 31);
- */
+  border-radius: 5px;
+}
+
+.selector{
+  width: 240px;
+  height: 40px;
+  border: 1px solid;
+  cursor: pointer;
+  border-radius: 5px;
+  font-family: 'Crimson Text', serif;
 }
