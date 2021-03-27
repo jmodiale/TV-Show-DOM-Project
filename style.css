@@ -55,7 +55,7 @@ body {
 
 .main {
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
   justify-content: space-around;
   width: 100%;
   height: auto;
@@ -80,6 +80,15 @@ body {
   box-sizing: border-box;
 }
 
+.showDiv {
+  height: 40px;
+  width: 240px;
+  border-radius: 5px;
+  background: white;
+  margin: 20px;
+  box-sizing: border-box;
+}
+
 .topdiv input {
   width: 240px;
   height: 40px;
@@ -94,4 +103,17 @@ body {
   cursor: pointer;
   border-radius: 5px;
   font-family: 'Crimson Text', serif;
+}
+
+.shows{
+  width: 240px;
+  height: 40px;
+  border: 1px solid;
+  cursor: pointer;
+  border-radius: 5px;
+  font-family: 'Crimson Text', serif;
+}
+
+.pagination{
+  
 }

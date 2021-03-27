@@ -58,7 +58,7 @@ function getAllShows() {
     {
       "id": 1632,
       "url": "http://www.tvmaze.com/shows/1632/horatio-hornblower",
-      "name": "Horatio Hornblower",
+      name: "Horatio Hornblower",
       "type": "Scripted",
       "language": "English",
       "genres": [
@@ -114,7 +114,7 @@ function getAllShows() {
     {
       "id": 465,
       "url": "http://www.tvmaze.com/shows/465/band-of-brothers",
-      "name": "Band of Brothers",
+      name: "Band of Brothers",
       "type": "Scripted",
       "language": "English",
       "genres": [
