@@ -1,7 +1,9 @@
+//Global Variables
 const episodeSearch = document.getElementsByClassName("season-names");
 const episodeCard = document.getElementsByClassName("card");
-//console.log(episodeCard)
-// console.log(episodeSearch)
+const showCard = document.getElementsByClassName("show-card")
+const rootElem = document.getElementById("root");
+
 let inputSearch = document.createElement("INPUT");
 inputSearch.setAttribute("type", "search");
 
@@ -22,21 +24,68 @@ let pages = document.createElement("div")
 pages.setAttribute("class", "pages")
 bod.appendChild(pages)
 
+
+let showId;
+let episode;
+
+//Setup Function
 function setup() {
-  getEpisodes()
-  // const allEpisodes = getAllEpisodes();
-  // makePageForEpisodes(allEpisodes);
   searchBar()
-  filter()
-  episodesList()
-  episodeSelection()
+  searchFilter()
   showsList()
-  sortShows()
-  selectShows()
+  showSelection()
+  getShows()
   citation()
 }
 
-function getEpisodes(showId = 82){
+//Populates the page with the shows
+function getShows(){
+  const rootElem = document.getElementById("root");
+
+  let shows = getAllShows();
+  let allShows = shows.sort(function compare(a, b) {
+    if (a.name.toUpperCase() < b.name.toLocaleUpperCase()) { return -1 }
+    if (a.name.toUpperCase() > b.name.toUpperCase()) { return 1 }
+    return 0;
+  })
+
+  for(i=0; i<allShows.length; i++){
+    let mainDiv = document.createElement("div")
+    mainDiv.setAttribute("class", "show-card")
+
+    let title = `${allShows[i].name} `
+    let h2 = document.createElement("h2")
+    h2.setAttribute("id", allShows[i].id)
+    h2.addEventListener("click", presentEpisodes)
+    h2.innerHTML = title
+
+    let page = `${allShows[i].summary}`
+    let p = document.createElement("p")
+    p.setAttribute("id", "show-text")
+    p.innerHTML = page
+
+    let status = `Genre: ${allShows[i].genres} Status: ${allShows[i].status}`
+    let h4 = document.createElement("h4")
+    h4.setAttribute("class", "status")
+    h4.innerHTML = status
+
+    let headers = `Rating: ${allShows[i].rating.average} Runtime: ${allShows[i].runtime}`
+    let h5 = document.createElement("h5")
+    h5.setAttribute("class", "headers")
+    h5.innerHTML = headers
+
+    let image = document.createElement("img")
+    image.setAttribute("class", "show-images")
+    let img = allShows[i].image.medium
+    image.src = img
+
+    rootElem.appendChild(mainDiv)
+    mainDiv.append(h2, image, p, h4, h5)
+  }
+}
+
+//Fetch and Print all episodes to webpage (default parameter)
+function getEpisodes(showId){
   const url = `https://api.tvmaze.com/shows/${showId}/episodes`;
     fetch(url)
     .then(function(response){
@@ -46,14 +95,10 @@ function getEpisodes(showId = 82){
         throw `${response.status} ${response.statusText}`;
     })
     .then(function(data) {
-      console.log(data)
+    
+    console.log(data)
     const rootElem = document.getElementById("root");
     rootElem.innerHTML = "";
-
-    // const pagination = document.getElementById("pagination");
-    // pagination.innerText = `Showing ${data.length} episodes`
-
-  //rootElem.textContent = `Got ${episodeList.length} episode(s)`;
  
   for(i=0; i<data.length; i++){
     let newDiv = document.createElement('div');
@@ -80,102 +125,93 @@ function getEpisodes(showId = 82){
     newDiv.append(season_Names, imgTag, sumTag)
   }
   populate(data);
-  });  
+  })
+  .catch(function(error){
+    console.log(error)
+  });
 }
 
-function selectShows(){
+//Present the episodes on page
+function presentEpisodes(event) {
+  const rootElem = document.getElementById("root");
+  //rootElem.innerHTML = "";
+  showId = parseInt(event.target.id);
+  getEpisodes(showId)
+}
+
+
+//Select show based on the unique id (ref = showId)
+function showSelection(){
   let listOfShows = document.getElementsByClassName("shows")[0];
   listOfShows.addEventListener('change', (event) => {
   getEpisodes(parseInt(event.target.value));
-  //const optionVal = listOfShows.options[listOfShows.selectedIndex].value;
-  //return optionVal
-});
+  });
 }
 
-//show id for each individual series in shows.js
-//any show id
-//event listener for selection - to fetch
-
-// function showSelection(showId){
-//   const url = `https://api.tvmaze.com/shows/${showId}/episodes`;
-//   fetch(url)
-//   .then(response => response.json())
-//   .then((data) => {
-//     console.log(data)
-//     // const ids = data.map(selection => selection.show.name);
-//     // console.log(ids)
-//     // let listOfShows = document.getElementsByClassName("shows")[0];
-//     // listOfShows.addEventListener('click', () => {
-//     // const optionVal = listOfShows.options[listOfShows.selectedIndex].value;
-//     // console.log(optionVal)
-//     // });
-//   })
-// }
-
-//Filter through episodes in searchbar
-function filter(){
+//Filter through shows/episodes in searchbar
+function searchFilter(){
   inputSearch.addEventListener('keyup', (event) => {
   const searchString = event.target.value;
-  for(i=0; i<episodeCard.length; i++){
-    episodeCard[i].textContent.toLowerCase().includes(searchString) ? episodeCard[i].style.display = "": episodeCard[i].style.display = "none"
-  }
-});
+    for(i=0; i<episodeCard.length; i++){
+      episodeCard[i].textContent.toLowerCase().includes(searchString) ? episodeCard[i].style.display = "": episodeCard[i].style.display = "none"
+    }
+    for(i=0; i<showCard.length; i++){
+      showCard[i].textContent.toLowerCase().includes(searchString) ? showCard[i].style.display = "": showCard[i].style.display = "none"
+    }
+  });
 }
 
 //Select an Episode or return to all episodes
 function episodeSelection(){
   let select = document.getElementsByClassName("selector")[0];
-    select.addEventListener('change', () => {
-     const optionVal = select.options[select.selectedIndex].value;
-     console.log(optionVal)
-       for(i=0; i<episodeCard.length; i++){
-         let epi = episodeCard[i]
-         let other = "-Select an episode-"
-         let showEverything = other===optionVal;
-         let showSelected = epi.textContent.includes(optionVal) ;
-         let isVisible = showSelected || showEverything
-         epi.style.display = isVisible ? "" : "none"
-        //isVisible ? epi.style.display = "" : epi.style.display = "none";
-        }
-   });
+  select.addEventListener('change', (event) => {
+    const optionVal = event.target.value //OR select.options[select.selectedIndex].value;
+    console.log(optionVal)
+    for(i=0; i<episodeCard.length; i++){
+      let epi = episodeCard[i]
+      let other = "-Select an episode-"
+      let showEverything = other===optionVal;
+      let showSelected = epi.textContent.includes(optionVal) ;
+      let isVisible = showSelected || showEverything
+      epi.style.display = isVisible ? "" : "none"
+    }
+  });
 }
 
-//Create a Search Bar
+//Create div for the Search Bar and placeholder
 function searchBar(){
-    let topdiv = document.createElement("div");
-    topdiv.setAttribute("class", "topdiv");
-    main.appendChild(topdiv)
+  let topdiv = document.createElement("div");
+  topdiv.setAttribute("class", "topdiv");
+  main.appendChild(topdiv)
 
-    topdiv.appendChild(inputSearch)
-    inputSearch.placeholder = "Search for an episode...";
+  topdiv.appendChild(inputSearch)
+  inputSearch.placeholder = "Search...";
 
-    const rootElem = document.getElementById("root");
-    bod.insertBefore(main, rootElem)
+  const rootElem = document.getElementById("root");
+  bod.insertBefore(main, rootElem)
 }
 
-//Populate the select dropdown with options
-// allepisodes = array of episodes objects
+//Create div for episodes dropdown
 function episodesList(){
-    let dropDiv = document.createElement("div");
-    dropDiv.setAttribute("class", "dropDiv");
-    main.appendChild(dropDiv)
+  let checkDiv = document.getElementsByClassName("dropDiv")
+  if(checkDiv.length > 0){
+    return 
+  }
+  let dropDiv = document.createElement("div");
+  dropDiv.setAttribute("class", "dropDiv");
+  main.appendChild(dropDiv)
 
-    dropDiv.appendChild(selector)
-
-    const rootElem = document.getElementById("root");
-    bod.insertBefore(main, rootElem)
-    // selector.innerHTML = "";
-    // let selectOption = document.createElement("option");
-    // selectOption.innerText = "-Select an episode-";
-    // selector.appendChild(selectOption);
+  dropDiv.appendChild(selector)
+  const rootElem = document.getElementById("root");
+  bod.insertBefore(main, rootElem)
 }
 
-function populate(allEpisodes){
-  //let opal = document.getElementsByClassName("selector")[0];
-  selector.innerHTML = ""; // clears selet element
-    let selectOption = document.createElement("option");
-    selectOption.innerText = "-Select an episode-";
-    selector.appendChild(selectOption);
+//Populate episodes select dropdown with the selected show episodes
+function populate(allEpisodes){ // allepisodes = array of episodes objects (JSON data - fetched from url)
+  selector.innerHTML = ""; // clears the select element
+  let selectOption = document.createElement("option");
+  selectOption.innerText = "-Select an episode-";
+  selector.appendChild(selectOption);
   let options = allEpisodes;
     for(i=0; i<options.length; i++) {
       let item = document.createElement("option");
@@ -185,48 +221,44 @@ function populate(allEpisodes){
       item.value = options[i].name
       selector.appendChild(item)
     }
+  goBack()
+  episodesList()
+  episodeSelection()
+  document.getElementsByClassName("showDiv").style.visibility = "hidden"
 }
 
-//Shows select
+//Create the Shows Select Dropdown & Sort
 function showsList(){
-    let showDiv = document.createElement("div");
-    showDiv.setAttribute("class", "showDiv");
-    main.appendChild(showDiv)
+  let showDiv = document.createElement("div");
+  showDiv.setAttribute("class", "showDiv");
+  main.appendChild(showDiv)
 
-    showDiv.appendChild(shows)
+  showDiv.appendChild(shows)
 
-    const rootElem = document.getElementById("root");
-    bod.insertBefore(main, rootElem)
+  const rootElem = document.getElementById("root");
+  bod.insertBefore(main, rootElem)
 
-    let selOption = document.createElement("option");
-    selOption.innerText = "-Select a Show-";
-    shows.appendChild(selOption);
+  let selOption = document.createElement("option");
+  selOption.innerText = "-Select a Show-";
+  shows.appendChild(selOption);
 
-    let allShows = getAllShows();
-    for(i=0; i<allShows.length; i++) {
-      let items = document.createElement("option");
-      items.innerHTML = allShows[i].name
-      items.value = allShows[i].id
-      shows.appendChild(items)
-    }
+  let allShows = getAllShows(); 
+  let sortShows = allShows.sort(function compare(a, b) {
+    if (a.name.toUpperCase() < b.name.toLocaleUpperCase()) { 
+      return -1 }
+    if (a.name.toUpperCase() > b.name.toUpperCase()) { 
+      return 1 }
+      return 0;
+  })
+  for(i=0; i<sortShows.length; i++) {
+    let items = document.createElement("option");
+    items.innerHTML = sortShows[i].name
+    items.value = sortShows[i].id
+    shows.appendChild(items)
+  }
 }
 
-function sortShows() {
-    let options = document.getElementsByClassName("shows")[0];
-    let optionArray = [];
-    let selectedValue = options[options.selectedIndex].value;
-    for (let i=0;i<options.options.length;i++) optionArray.push(options.options[i]);
-    optionArray.sort(function(a,b){ return (a.text < b.text)?-1:1; });
-    while (options.options.length > 0) options.options[0] = null;
-    let newSelectedIndex = 0;
-    for (let i=0;i<optionArray.length;i++) {
-        options.options[i] = optionArray[i];
-        if(options.options[i].value == selectedValue) newSelectedIndex = i;
-    }
-    options.selectedIndex = newSelectedIndex;
-    return;
-}
-
+//Citation text on page referencing source
 function citation(){
   let linkText = document.createElement("p")
   linkText.setAttribute("id", "citation")
@@ -235,4 +267,29 @@ function citation(){
   document.body.appendChild(linkText) 
 }
 
+//Creates the back button to go back to the shows page
+function goBack() {
+  let backButton = document.getElementsByClassName("back-btn")
+  if(backButton.length > 0){
+    return 
+  }
+  let showButton = document.createElement("div");
+  showButton.setAttribute("class","back-btn");
+
+  let button = document.createElement("button");
+  button.innerHTML = "&laquo; Shows Listing";
+  button.setAttribute("type", "button")
+  button.setAttribute("class", "btn")
+
+  showButton.appendChild(button)
+  main.appendChild(showButton)
+  button.addEventListener("click", () => {
+    rootElem.innerHTML = ""
+    getShows()
+  })
+}
+
 window.onload = setup;
+
+
+

@@ -5,9 +5,9 @@ body {
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  font-family: 'Crimson Text', serif;
+  font-family: "Crimson Text", serif;
 }
- 
+
 * {
   box-sizing: border-box;
 }
@@ -30,12 +30,12 @@ body {
   border-radius: 10px;
   cursor: pointer;
   padding: 1.5rem;
-  padding-left: 1rem
+  padding-left: 1rem;
 }
 
 .summary-text {
   text-align: justify;
-  word-break:keep-all;
+  word-break: keep-all;
   z-index: 10;
   position: relative;
   font-size: 12px;
@@ -46,12 +46,12 @@ body {
   border-radius: 5px;
 }
 
- .card:hover {
+.card:hover {
   transform: scale(1.2);
-  box-shadow: 5px 5px 15px white; 
+  box-shadow: 5px 5px 15px white;
   background-color: rgb(15, 22, 31);
   color: white;
-} 
+}
 
 .main {
   display: flex;
@@ -62,7 +62,7 @@ body {
   background-color: rgb(15, 22, 31);
 }
 
-.topdiv { 
+.topdiv {
   height: 40px;
   width: 240px;
   border-radius: 5px;
@@ -92,28 +92,97 @@ body {
 .topdiv input {
   width: 240px;
   height: 40px;
-  font-family: 'Crimson Text', serif;
+  font-family: "Crimson Text", serif;
   border-radius: 5px;
 }
 
-.selector{
+.selector {
   width: 240px;
   height: 40px;
   border: 1px solid;
   cursor: pointer;
   border-radius: 5px;
-  font-family: 'Crimson Text', serif;
+  font-family: "Crimson Text", serif;
 }
 
-.shows{
+.shows {
   width: 240px;
   height: 40px;
   border: 1px solid;
   cursor: pointer;
   border-radius: 5px;
-  font-family: 'Crimson Text', serif;
+  font-family: "Crimson Text", serif;
 }
 
-.pagination{
-  
+.show-images {
+  width: 200px;
+  height: 200px;
+  align-self: center;
+}
+
+#show-text {
+  overflow: hidden;
+  word-break: keep-all;
+  z-index: 10;
+  position: relative;
+  font-size: 10px;
+  text-align: justify;
+}
+
+.show-card {
+  box-shadow: 1px 10px 5px 0px rgb(15, 22, 31);
+  width: 25rem;
+  height: 35rem;
+  /*
+  align-items: center;
+  justify-content: center;
+  */
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 1.5rem;
+  padding-left: 1rem;
+  line-height: unset;
+}
+
+.show-card:hover {
+  transform: scale(1.1);
+  box-shadow: 5px 5px 15px white;
+  background-color: rgb(15, 22, 31);
+  color: white;
+}
+
+.btn {
+  width: 140px;
+  height: 40px;
+  font-family: "Crimson Text", serif;
+  border-radius: 5px;
+  font-size: 15px;
+  background: white;
+}
+
+.back-btn {
+  height: 40px;
+  width: 140px;
+  border-radius: 5px;
+  background: white;
+  margin: 20px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 700px) {
+  #root {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .show-card {
+    width: 22rem;
+    height: 35rem;
+  }
+  .main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }
