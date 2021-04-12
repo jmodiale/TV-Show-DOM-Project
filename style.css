@@ -186,3 +186,35 @@ body {
     align-items: center;
   }
 }
+
+/* @media (min-width: 768px) {
+  #root {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .show-card {
+    width: 22rem;
+    height: 35rem;
+  }
+  .main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@media (min-width: 1024px) {
+  #root {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .show-card {
+    width: 30rem;
+    height: 35rem;
+  }
+  .main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+} */

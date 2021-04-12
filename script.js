@@ -76,7 +76,7 @@ function getShows(){
 
     let image = document.createElement("img")
     image.setAttribute("class", "show-images")
-    let img = allShows[i].image.medium
+    let img = allShows[i].image?.medium
     image.src = img
 
     rootElem.appendChild(mainDiv)
@@ -96,7 +96,7 @@ function getEpisodes(showId){
     })
     .then(function(data) {
     
-    console.log(data)
+    //console.log(data)
     const rootElem = document.getElementById("root");
     rootElem.innerHTML = "";
  
@@ -166,7 +166,7 @@ function episodeSelection(){
   let select = document.getElementsByClassName("selector")[0];
   select.addEventListener('change', (event) => {
     const optionVal = event.target.value //OR select.options[select.selectedIndex].value;
-    console.log(optionVal)
+    //console.log(optionVal)
     for(i=0; i<episodeCard.length; i++){
       let epi = episodeCard[i]
       let other = "-Select an episode-"
@@ -224,7 +224,7 @@ function populate(allEpisodes){ // allepisodes = array of episodes objects (JSON
   goBack()
   episodesList()
   episodeSelection()
-  document.getElementsByClassName("showDiv").style.visibility = "hidden"
+  //document.getElementsByClassName("showDiv").style.visibility = "hidden"
 }
 
 //Create the Shows Select Dropdown & Sort
@@ -285,7 +285,11 @@ function goBack() {
   main.appendChild(showButton)
   button.addEventListener("click", () => {
     rootElem.innerHTML = ""
+    let dropDiv = document.getElementsByClassName("dropDiv")[0]
+    dropDiv.style.visibility = "hidden"
     getShows()
+    let back = document.getElementsByClassName("back-btn")[0]
+    back.style.visibility = "hidden"
   })
 }
 
