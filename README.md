@@ -12,5 +12,4 @@ The solution to this project will be given to you after you have completed it. Y
 
 https://github.com/CodeYourFuture/tv-show-dom-project-solution
 
-CYF 14/03/2021
 lll
