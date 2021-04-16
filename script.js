@@ -224,7 +224,6 @@ function populate(allEpisodes){ // allepisodes = array of episodes objects (JSON
   goBack()
   episodesList()
   episodeSelection()
-  //document.getElementsByClassName("showDiv").style.visibility = "hidden"
 }
 
 //Create the Shows Select Dropdown & Sort
@@ -287,9 +286,9 @@ function goBack() {
     rootElem.innerHTML = ""
     let dropDiv = document.getElementsByClassName("dropDiv")[0]
     dropDiv.style.visibility = "hidden"
-    getShows()
     let back = document.getElementsByClassName("back-btn")[0]
     back.style.visibility = "hidden"
+    getShows()
   })
 }
 
